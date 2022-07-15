@@ -1,0 +1,68 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}
+
+Let's-makan together!
+
+{% endblock title %}
+
+{% block hero %}
+
+<div class="flexbox" style="align-content:center;">
+  <h1><strong>Let's makan!</strong></h1>
+</div>
+<div class="flexbox" style="align-content:center;">
+  <h5>Select a dinner place or create a new one:</h5>
+  <a class="button" style="margin:4px" href="{% url 'polls:create_event' %}"><strong>Suggest</strong></a>
+</div>
+
+{% endblock hero %}
+
+
+{% block content %}
+
+<div class="row" style="padding-top:3em">
+  <div class="column">
+    {% if events %}
+  <div class="flexbox">
+    {% for event in events %}
+    <div class="card">
+      <a href="{% url 'polls:event_detail' event.id %}"><span class="card__link"></span></a>
+      <p class="mb-0 secondary"><strong>#{{ forloop.counter }}</strong></p>
+      <h3 class="mb-0"><strong>{{ event.location.name }}</strong></h3>
+      <p class="mb-0 secondary"><i>suggested by {{ event.creator.username }}</i></p>
+      {% if event.get_voters|length == 0 %}
+        <p>Nobody's going! 😟</p>
+      {% elif event.get_voters|length > 3 %}
+        <p>Going: {{ event.get_voters.0 }}, {{ event.get_voters.1 }}, {{ event.get_voters.2 }}, and {{ event.get_voters|length|add:"-3" }} other{{ event.get_voters|length|add:"-3"|pluralize }}...</p>
+      {% else %}
+        <p>Going: {{ event.get_voters|join:", " }}</p>
+      {% endif %}
+      <div class="flexbox buttons">
+        {% if user.is_authenticated and user.username not in event.get_voters %}
+          <form style="margin-bottom:0px" method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}">
+            <input class="button button-primary card-button" name="join" type="submit" value="Join">
+          </form>
+        {% elif user.is_authenticated and user.username in event.get_voters %}
+          <form style="margin-bottom:0px" method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}">
+            <input class="button card-button" name="exit" type="submit" value="Quit">
+          </form>
+        {% else %}
+          <a class="button card-button" style="margin:4px" href="{% url 'login' %}">Login to view</a>
+        {% endif %}
+        {% if user.is_authenticated and user == event.creator %}
+          <a class="button card-button" href="{% url 'polls:update' event.id %}">Edit</a>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+</div>
+</div>
+
+{% endblock content %}

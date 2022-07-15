@@ -1,0 +1,32 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}
+
+Update
+
+{% endblock title %}
+
+{% block hero %}
+
+<h1><strong>Edit: {{ event.location.name }}</strong></h1>
+<h5>Hey {{ user }}, let's edit your suggestion...</h5>
+
+{% endblock hero %}
+
+
+{% block content %}
+<div class="row row-card">
+  <div class="column">
+<form method="POST">
+    {% csrf_token %}
+    {{ location_form.as_table }}
+    {{ event_form.as_table }}
+    <input class="button button-primary u-full-width mb-0" name="edit" type="submit" value="Save">
+  </form>
+<form class="mb-0" method="POST">
+    {% csrf_token %}
+    <input class="button u-full-width mb-0" name="delete" type="submit" value="Delete">
+  </form>
+</div>
+</div>
+{% endblock content %}

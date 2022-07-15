@@ -1,0 +1,39 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}
+
+Add Suggestion
+
+{% endblock title %}
+
+{% block hero %}
+
+<h1><strong>Create Location</strong></h1>
+<h5>Let's get everyone on board this new place!</h5>
+
+{% endblock hero %}
+
+
+{% block content %}
+<div class="row row-card">
+  <form action="{% url 'polls:create_location' %}" method="POST">
+  {% csrf_token %}
+  <div class="row">
+      <div class="six columns">
+      {{ location_form.name.label_tag }}
+      {{ location_form.name }}
+      </div>
+      <div class="six columns">
+      {{ location_form.url.label_tag }}
+      {{ location_form.url }}
+      </div>
+    </div>
+    <div class="row">
+      {{ event_form.note.label_tag }}
+      {{ event_form.note }}
+      <input class="button-primary u-full-width" type="submit" value="Submit">
+    </div>
+  </form>
+  <p class="secondary"><i>Changed your mind? Go <a href="{% url 'polls:create_event' %}">back</a> to select a dinner place.</i></p>
+</div>
+{% endblock content %}

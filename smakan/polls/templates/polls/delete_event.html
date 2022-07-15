@@ -1,0 +1,30 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}
+
+Delete
+
+{% endblock title %}
+
+{% block hero %}
+
+<h1><strong>Deleting: {{ event.location.name }}</strong></h1>
+<h5>Are you sure you want to delete this event?</h5>
+
+{% endblock hero %}
+
+
+{% block content %}
+<div class="row row-card">
+  <div class="column">
+<form method="POST">
+    {% csrf_token %}
+    <input class="button button-primary u-full-width mb-0" name="confirm" type="submit" value="Yes">
+  </form>
+<form class="mb-0" method="POST">
+    {% csrf_token %}
+    <input class="button u-full-width mb-0" name="decline" type="submit" value="No">
+  </form>
+</div>
+</div>
+{% endblock content %}

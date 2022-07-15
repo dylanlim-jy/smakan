@@ -1,0 +1,42 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}
+
+Register
+
+{% endblock title %}
+
+{% block hero %}
+
+<h1><strong>Registration</strong></h1>
+<h5>Let's get you set up.</h5>
+
+{% endblock hero %}
+
+
+{% block content %}
+
+<div class="row row-card">
+<form action="{% url 'polls:register' %}" method="POST">
+    {% csrf_token %}
+    <div class="row">
+      <div class="column">
+        <label for="username">Name</label>
+        <input class="u-full-width" type="text" placeholder="Thomas Aquinas" id="username" name="username">
+      </div>
+    </div>
+    <div class="row">
+        <div class="six columns">
+            <label for="password1">Password PIN (4 digits)</label>
+            <input class="u-full-width" type="password" id="password1" name="password1" title="4-digit Pin" pattern="[0-9]{4}" placeholder="1234" maxlength="4">
+        </div>
+        <div class="six columns">
+            <label for="password2">Confirm Password PIN (4 digits)</label>
+            <input class="u-full-width" type="password" id="password2" name="password2" title="4-digit Pin" pattern="[0-9]{4}" placeholder="1234" maxlength="4">
+        </div>
+    </div>
+    <input class="button-primary" type="submit" value="Register">
+  </form>
+  <p>Already have an account? Log in <a href="{% url 'polls:login' %}">here</a>.</p>
+</div>
+{% endblock content %}

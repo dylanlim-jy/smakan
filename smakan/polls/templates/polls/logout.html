@@ -1,0 +1,21 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}
+
+Logout
+
+{% endblock title %}
+
+{% block hero %}
+
+<h1><strong>Logout</strong></h1>
+<h5>You're out. Go home?</h5>
+
+{% endblock hero %}
+
+
+{% block content %}
+
+<a class="button button-primary" href="{% url 'polls:index'%}">Yeah</a>
+<a class="button" href="{% url 'polls:index'%}">Nah</a>
+{% endblock content %}

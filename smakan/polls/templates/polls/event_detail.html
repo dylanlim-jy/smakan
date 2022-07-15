@@ -1,0 +1,64 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}
+
+{{ event.location.name }}
+
+{% endblock title %}
+
+{% block hero %}
+
+<h1><strong>{{ event.location.name }}</strong></h1>
+<h5>Suggestion made by {{ event.creator.username }} at {{ event.created_date }}</h5>
+
+{% endblock hero %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="column">
+      {% if event.location.url %}
+      <a class="button button-primary" href="{{ event.location.url }}" target="_blank">Map link</a>
+      {% endif %}
+      {% if event.creator.id == user.id %}
+      <a class="button" href="{% url 'polls:update' event.id %}">Edit</a>
+      {% endif %}
+    </div>
+</div>
+<div class="row row-card">
+  <div class="column">
+      {% if event.note %}
+      <hr>
+      <p class="secondary">Notes:</p>
+      <p class="secondary">{{ event.note }}</p>
+      <hr>
+      {% endif %}
+
+      {% if event.voters.all|length == 0%}
+      <p>Oh no! Nobody's coming. Would you like to be the first?</p>
+      {% else %}
+      <p>Here's who will be going:</p>
+      <ol>
+        {% for v in event.get_voters %}
+        <li>
+          {{ v }}
+        </li>
+        {% endfor %}
+      </ol>
+      {% endif %}
+      {% if user.username not in event.get_voters %}
+      <form method="POST">
+        {% csrf_token %}
+        <input class="button button-primary" name="join" type="submit" value="Join Dinner">
+      </form>
+      {% else %}
+      <form method="POST">
+        {% csrf_token %}
+        <input class="button" name="exit" type="submit" value="Exit Dinner">
+      </form>
+      {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

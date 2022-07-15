@@ -1,0 +1,22 @@
+<nav class="navbar">
+    <div class="container" style="display:flex;">
+        <a class="navbar-link" style="margin-right:auto;" href="{% url 'polls:index' %}">🍱</a>
+        <ul class="navbar-list">
+            {% if user.is_authenticated %}
+            <li class="navbar-item">
+                <p class="navbar-link">Hello, {{ user.username }}</p>
+            </li>
+            <li class="navbar-item">
+                <a class="navbar-link" href="{% url 'polls:logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="navbar-item">
+                <p class="navbar-link">Hello, guest</p>
+            </li>
+            <li class="navbar-item">
+                <a class="navbar-link" href="{% url 'polls:login' %}">Login</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
