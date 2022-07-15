@@ -44,7 +44,7 @@ def event_detail(request, pk):
         messages.success(request, "Exited event!")
         return redirect('polls:event_detail', pk=pk)
     elif request.user.is_authenticated == False:
-        return redirect('login')
+        return redirect('polls:login')
     return render(request, 'polls/event_detail.html', context={'event': event})
     
 
@@ -80,7 +80,7 @@ def create_location(request):
             }
             return render(request, 'polls/create_location.html', context=context)
     else:
-        return redirect('login')
+        return redirect('polls:login')
 
 def create_event(request):
     # Initialize Model forms under the create view
@@ -104,7 +104,7 @@ def create_event(request):
         else: 
             return render(request, 'polls/create_event.html', context={'event_form': event_form})
     else:
-        return redirect('login')
+        return redirect('polls:login')
 
 def update_event(request, pk):
     # Retrieve models and initialize form with model instances
@@ -135,7 +135,7 @@ def update_event(request, pk):
             }
             return render(request, 'polls/update_event.html', context=context)
     else:
-        return redirect('login')
+        return redirect('polls:login')
 
 def delete_event(request, pk):
     # Retrieve object to be deleted
@@ -151,7 +151,7 @@ def delete_event(request, pk):
         else:
             return render(request, 'polls/delete_event.html', context={'event': event})
     else:
-        return redirect('login')
+        return redirect('polls:login')
 
 
 def register(request):
