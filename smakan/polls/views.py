@@ -186,6 +186,9 @@ def sign_in(request):
             login(request, user)
             messages.success(request, "Welcome back!")
             return redirect('polls:index')
+        elif user is None:
+            messages.warning(request, "Wrong password.")
+            return redirect('polls:login')
     elif request.user.is_authenticated == True:
         return redirect('polls:index')
     else:

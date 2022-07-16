@@ -52,7 +52,7 @@ Let's-makan together!
             <input class="button card-button" name="exit" type="submit" value="Quit">
           </form>
         {% else %}
-          <a class="button card-button" style="margin:4px" href="{% url 'login' %}">Login to view</a>
+          <a class="button card-button" style="margin:4px" href="{% url 'polls:login' %}">Login to view</a>
         {% endif %}
         {% if user.is_authenticated and user == event.creator %}
           <a class="button card-button" href="{% url 'polls:update' event.id %}">Edit</a>
